@@ -5,11 +5,6 @@ server <- function(input, output){
     read.csv(inFile$datapath)
   })
   
-  # Récupération des valeurs fecondite
-  valeurFinal <- reactive({
-    valeurRecup<- melt(data(), measure.vars = input$unid )
-    valeurRecup$value
-  })
   
   
   output$nuagePoints <- renderPlot({
@@ -146,8 +141,8 @@ server <- function(input, output){
   # Histogramme
   # ----
   output$hist <- renderPlot({
-    hist(valeurFinal, freq = rv$hist_isFreq, cex.axis = 1.5, cex.main = 1.5,
-         main = "Histogramme de l'indice", col = rv$hist_col,
+    hist(data()[, input$unid] , freq = rv$hist_isFreq, cex.axis = 1.5, cex.main = 1.5,
+         main = paste("Histogramme de l'indice",input$unid), col = rv$hist_col,
          xlab = "Indice de x", ylab = rv$hist_yLabel, las = 1,
          breaks = seq(0.8, 3, by = 0.2), right = FALSE, cex.lab = 1.5)
   })
